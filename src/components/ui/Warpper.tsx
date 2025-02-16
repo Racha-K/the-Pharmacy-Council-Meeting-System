@@ -10,8 +10,8 @@ interface Props {
 
 function Warpper({ children, className }: Props) {
   return (
-    <div className="w-full h-screen bg-cover px-4 py-6" style={{ backgroundImage: `url(${bgmain.src})` }}>
-      <div className={cn(className, 'w-full h-full bg-cover px-4 py-6 rounded-2xl')} style={{ backgroundImage: `url(${bgsub.src})` }} >
+    <div className="w-full h-svh bg-cover px-4 py-6" style={{ backgroundImage: `url(${bgmain.src})` }}>
+      <div className={cn(className, 'w-full h-full bg-cover px-4 py-6 rounded-2xl md:rounded-none')} style={{ backgroundImage: `url(${bgsub.src})` }} >
         {children}
       </div>
     </div>

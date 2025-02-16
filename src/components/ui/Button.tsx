@@ -15,7 +15,7 @@ const Button = ({ title, path, className, onClick }: Props) => {
     return (
         <button
             onClick={path ? () => router.push(path) : onClick}
-            className={cn(className, 'bg-primary md:max-w-[300px] text-white w-full py-4 rounded-3xl font-semibold text-lg')}>{title}</button>
+            className={cn(className, 'bg-primary md:max-w-[300px] text-white w-full py-4 rounded-full font-semibold text-lg')}>{title}</button>
     )
 }
 
