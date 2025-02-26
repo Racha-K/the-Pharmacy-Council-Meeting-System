@@ -1,7 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import React from 'react'
-import { cn } from '../../libs/cn';
+import { cn } from '../../lib/cn';
 
 interface Props {
     title?: string
