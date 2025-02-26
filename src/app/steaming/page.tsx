@@ -1,4 +1,3 @@
-import Warpper from '@/components/ui/Warpper'
 import React from 'react'
 
 function page() {
