@@ -15,7 +15,7 @@ const page = () => {
     const router = useRouter()
     return (
         <Warpper className=' space-y-2 md:space-y-4 flex flex-col items-center relative'>
-            <Link href={"####"} className='top-12 hidden md:block right-4 absolute px-3 py-2 bg-[#FAFAEB] border border-[#E7E6AF] rounded-full text-[#23260D]'>เว็บไซต์สภาเภสัชกรรม</Link>
+            <Link href={"https://www.pharmacycouncil.org/#gsc.tab=0"} className='top-12 hidden md:block right-4 absolute px-3 py-2 bg-[#FAFAEB] border border-[#E7E6AF] rounded-full text-[#23260D]'>เว็บไซต์สภาเภสัชกรรม</Link>
             <div className='max-w-[578px] min-h-full place-content-center place-self-center space-y-6'>
                 <div className='space-y-3 md:space-y-8 flex flex-col items-center'>
                     <Image src={icon} alt='icon' className='w-[70px] h-[70px] md:w-[140px] md:max-w-[150px] md:h-[140px] md:max-h-[150px]' />

@@ -1,6 +1,6 @@
 const Watermark = () => {
     return (
-        <div className="absolute top-0 left-0 w-full h-full grid xl:grid-cols-6 2xl:grid-cols-7 grid-cols-5 grid-rows-7  opacity-30 !z-20 pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full grid grid-cols-6 grid-rows-10 sm:grid-cols-5 sm:grid-rows-7 lg:grid-cols-6 lg:grid-rows-6 xl:grid-cols-8  opacity-30 !z-20 pointer-events-none">
             {Array.from({ length: 48 }).map((_, index) => {
                 const randomX = Math.random() * 10 - 5;
                 const randomY = Math.random() * 10 - 5;
@@ -9,12 +9,12 @@ const Watermark = () => {
                 return (
                     <div
                         key={index}
-                        className="text-white lg:text-2xl xl:text-3xl text-nowrap font-bold flex items-center justify-center"
+                        className="text-white text-xs sm:text-base md:text-xl lg:text-2xl xl:text-2xl text-nowrap font-bold flex items-center justify-center"
                         style={{
                             transform: `translate(${randomX}px, ${randomY}px) rotate(${randomRotate}deg)`,
                         }}
                     >
-                        Your Watermark
+                        ภก.อภินันท์ วัชราภิชาต
                     </div>
                 );
             })}
