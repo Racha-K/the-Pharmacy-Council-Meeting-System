@@ -72,8 +72,8 @@ export default function Home() {
           </div>
           <div className='space-y-6 flex flex-col items-center '>
             <Dialog>
-              <DialogTrigger className='flex relative w-full justify-center items-center'>
-                <button className=' lg:w-[528px] w-full mt-12 bg-gradient-main text-2xl font-semibold text-white py-4 rounded-2xl'>เข้าสู่ระบบ</button>
+              <DialogTrigger className='flex relative w-full justify-center items-center mt-12 '>
+                <button className=' lg:w-[528px] w-full bg-gradient-main text-2xl font-semibold text-white py-4 rounded-2xl'>เข้าสู่ระบบ</button>
                 {/* <Button title='เข้าสู่ระบบ' /> */}
               </DialogTrigger>
               <DialogContent className='max-w-[calc(100vw-48px)] lg:space-y-4 p-4 rounded-3xl'>
@@ -108,7 +108,7 @@ export default function Home() {
                   </div>
                 </div>
                 <DialogFooter className='flex gap-4 lg:gap-8 !place-self-center !justify-center w-full font-semibold'>
-                  <DialogClose>
+                  <DialogClose className='grow lg:grow-0'>
                     <button
                       onClick={() => { setIsOk(false) }}
                       className='border w-full lg:w-[305px] p-4 rounded-2xl lg:text-2xl text-[#23260D]'>
@@ -118,7 +118,7 @@ export default function Home() {
                   <button
                     disabled={!isOk}
                     onClick={() => { router.push('/login') }}
-                    className={`border w-full lg:w-[305px] p-4 rounded-2xl lg:text-2xl text-[#ffffff] ${isOk ? 'cursor-pointer bg-gradient-to-r from-[#80862A] to-[#4F5321]' : 'cursor-not-allowed disabled:opacity-50 disabled:bg-[#C1C457]'}`}>
+                    className={`border grow lg:flex-grow-0 lg:w-[305px] p-4 rounded-2xl lg:text-2xl text-[#ffffff] ${isOk ? 'cursor-pointer bg-gradient-to-r from-[#80862A] to-[#4F5321]' : 'cursor-not-allowed disabled:opacity-50 disabled:bg-[#C1C457]'}`}>
                     ยินยอม
                   </button>
                 </DialogFooter>
