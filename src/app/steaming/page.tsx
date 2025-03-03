@@ -3,11 +3,9 @@ import Watermark from './_components/water-mark'
 import Image from 'next/image'
 
 import tele from "@/assets/icons/tele.svg"
-import Warpper from '@/components/ui/Warpper'
 
 function page() {
     return (
-        // <Warpper>
 
         <div className='flex flex-col items-center justify-center min-h-screen w-full !z-[100] relative overflow-hidden p-4 space-y-4' >
             <Image src={tele} alt="logo" width={100} height={100} className='absolute top-12 left-12' />
@@ -31,7 +29,6 @@ function page() {
                 โทรศัพท์ 02-591-9992  Email: pharthai@pharmacycouncil.org
             </p>
         </div>
-        // </Warpper>
     )
 }
 
