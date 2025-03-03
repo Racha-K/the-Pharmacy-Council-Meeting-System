@@ -7,8 +7,8 @@ import tele from "@/assets/icons/tele.svg"
 function page() {
     return (
 
-        <div className='flex flex-col items-center justify-center min-h-screen w-full !z-[100] relative overflow-hidden p-4 space-y-4' >
-            <Image src={tele} alt="logo" width={100} height={100} className='absolute top-12 left-12' />
+        <div className='flex flex-col items-center justify-start md:justify-center min-h-screen w-full !z-[100] relative overflow-hidden p-4 space-y-6' >
+            <Image src={tele} alt="logo" width={100} height={100} className=' top-12 left-12' />
             {/* YouTube Iframe */}
             <iframe
                 className="w-[1000px] max-w-full aspect-video"

@@ -9,7 +9,7 @@ const Watermark = () => {
                 return (
                     <div
                         key={index}
-                        className="text-white text-xs sm:text-base md:text-xl lg:text-2xl xl:text-2xl text-nowrap font-bold flex items-center justify-center"
+                        className="text-white text-[10px] sm:text-base md:text-xl lg:text-xl xl:text-xl text-nowrap font-bold flex items-center justify-center"
                         style={{
                             transform: `translate(${randomX}px, ${randomY}px) rotate(${randomRotate}deg)`,
                         }}
