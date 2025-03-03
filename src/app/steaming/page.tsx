@@ -1,8 +1,9 @@
 import React from 'react'
+import Watermark from './_components/water-mark'
 
 function page() {
     return (
-        <div className='flex items-center justify-center min-h-screen w-full !z-[100] relative'>
+        <div className='flex items-center justify-center min-h-screen w-full !z-[100] relative overflow-hidden p-4'>
             {/* YouTube Iframe */}
             <iframe
                 className="w-[1100px] max-w-full aspect-video"
@@ -14,11 +15,7 @@ function page() {
             ></iframe>
 
             {/* ลายน้ำ (Watermark) */}
-            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center -rotate-45 opacity-30 z-20 pointer-events-none">
-                <div className="text-white text-6xl font-bold transform w-full h-full flex items-center justify-center">
-                    Your Watermark
-                </div>
-            </div>
+            <Watermark />
         </div>
     )
 }

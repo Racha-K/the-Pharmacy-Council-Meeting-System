@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+'use client'
 import Warpper from '@/components/ui/Warpper'
 import Image from 'next/image'
 import React from 'react'
@@ -6,9 +8,11 @@ import icon from '@/assets/icons/tele.svg'
 import { LockOpen, User } from 'lucide-react'
 import Link from 'next/link'
 import { Switch } from '@/components/ui/switch'
+import { useRouter } from 'next/navigation'
 
 
 const page = () => {
+    const router = useRouter()
     return (
         <Warpper className=' space-y-2 md:space-y-4 flex flex-col items-center relative'>
             <Link href={"####"} className='top-12 hidden md:block right-4 absolute px-3 py-2 bg-[#FAFAEB] border border-[#E7E6AF] rounded-full text-[#23260D]'>เว็บไซต์สภาเภสัชกรรม</Link>
@@ -47,10 +51,12 @@ const page = () => {
                             <Switch />
                             <span>Remember me</span>
                         </div>
-                        <Link href={"####"} className='text-[#5D6222] text-lg font-bold'>ลืมรหัสผ่าน?</Link>
+                        <span className='text-[#5D6222] text-lg font-bold'>ลืมรหัสผ่าน?</span>
                     </div>
                     <div className='space-y-6'>
-                        <button className='bg-gradient-to-tr from-[#80862A] to-[#5D6222] text-white w-full py-4 rounded-2xl font-semibold text-2xl'>
+                        <button
+                            onClick={() => router.push('/steaming')}
+                            className='bg-gradient-to-tr from-[#80862A] to-[#5D6222] text-white w-full py-4 rounded-2xl font-semibold text-2xl'>
                             เข้าสู่ระบบ
                         </button>
                         <p className='text-center text-[#23260D] text-[14px] md:text-base'>

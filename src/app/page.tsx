@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogFooter, DialogTitle, DialogTrigger } from 
 import { ArrowDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { DialogClose } from '@radix-ui/react-dialog';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 
 
@@ -22,14 +22,35 @@ export default function Home() {
       ref.current.scrollTo({ top: ref.current.scrollHeight, behavior: 'smooth' })
     }
   }
+
   const handleScroll = () => {
-    if (ref.current) {
-      const { scrollTop, scrollHeight, clientHeight } = ref.current;
-      if (scrollTop + clientHeight >= scrollHeight - 5) {
-        setIsOk(true);
-      }
+    if (!ref.current) {
+      setIsOk(true);
+      return;
+    }
+
+    const { scrollTop, scrollHeight, clientHeight } = ref.current;
+    if (scrollTop + clientHeight >= scrollHeight - 5) {
+      setIsOk(true);
     }
   };
+
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const handleScroll = () => {
+      setIsOk(element.scrollTop === 0);
+    };
+
+    element.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => {
+      element.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -51,7 +72,7 @@ export default function Home() {
           </div>
           <div className='space-y-6 flex flex-col items-center '>
             <Dialog>
-              <DialogTrigger className='flex relative w-full'>
+              <DialogTrigger className='flex relative w-full justify-center items-center'>
                 <button className=' lg:w-[528px] w-full mt-12 bg-gradient-main text-2xl font-semibold text-white py-4 rounded-2xl'>เข้าสู่ระบบ</button>
                 {/* <Button title='เข้าสู่ระบบ' /> */}
               </DialogTrigger>
@@ -64,7 +85,7 @@ export default function Home() {
                   ref={ref}
                   onScroll={handleScroll}
                   className='bg-[#F1F1E8] relative rounded-lg lg:rounded-3xl p-4 max-h-[calc(100vh-20rem)] lg:max-h-[calc(100vh-40rem)] min-h-[400px] overflow-hidden overflow-y-auto'>
-                  <p className='h-full'>
+                  <p className='h-full xl:text-lg'>
                     “ข้อมูลส่วนบุคคล” หมายถึง ข้อมูลเกี่ยวกับบุคคลซึ่งทำให้สามารถระบุตัวบุคคลนั้นได้ไม่ว่าทางตรงหรือทางอ้อม แต่ไม่รวมถึงข้อมูลของผู้ถึงแก่กรรมโดยเฉพาะ<br />
                     “ข้อมูลส่วนบุคคลที่อ่อนไหว” หมายถึง ข้อมูลส่วนบุคคลที่เกี่ยวกับเชื้อชาติ เผ่าพันธุ์ ความคิดเห็นทางการเมือง ความเชื่อในลัทธิ ศาสนาหรือปรัชญา พฤติกรรมทางเพศ ประวัติอาชญากรรม ข้อมูลสุขภาพ ความพิการ ข้อมูลสหภาพแรงงาน ข้อมูลพันธุกรรม ข้อมูลชีวภาพ (เช่น ข้อมูลภาพจำลองใบหน้า ข้อมูลจำลองม่านตา ข้อมูลจำลองลายนิ้วมือ) หรือข้อมูลอื่นใดที่กระทบต่อเจ้าของข้อมูลส่วนบุคคลในทำนองเดียวกันตามที่คณะกรรมการคุ้มครองข้อมูลส่วนบุคคลประกาศกำหนด<br />
                     “ประมวลผล” หมายถึง เก็บรวบรวม ใช้ หรือเปิดเผย<br />
@@ -82,7 +103,7 @@ export default function Home() {
                   </p>
                   <div
                     onClick={scrollToRef}
-                    className='grid place-content-center fixed bottom-[11rem] md:bottom-[7rem] lg:bottom-[8rem] right-8 w-14 aspect-square rounded-full bg-[#464646]'>
+                    className='grid cursor-pointer place-content-center fixed bottom-[11rem] md:bottom-[7rem] lg:bottom-[8rem] right-8 w-14 aspect-square rounded-full bg-[#464646]'>
                     <ArrowDown size={32} color='white' />
                   </div>
                 </div>
