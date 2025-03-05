@@ -1,0 +1,82 @@
+import { z } from "zod";
+
+const AddressContactSchema = z.object({
+  address_type: z.string(),
+  office_name: z.string(),
+  address_no: z.string(),
+  moo: z.string(),
+  village: z.string(),
+  soi: z.string(),
+  road: z.string(),
+  province: z.string(),
+  district: z.string(),
+  subdistrict: z.string(),
+  zipcode: z.string(),
+  mobile: z.string(),
+  email: z.string(),
+  last_update: z.string(),
+});
+
+const AddressOfficeSchema = z.object({
+  address_type: z.string(),
+  office_name: z.string(),
+  address_no: z.string(),
+  moo: z.string(),
+  village: z.string(),
+  soi: z.string(),
+  road: z.string(),
+  province: z.string(),
+  district: z.string(),
+  subdistrict: z.string(),
+  zipcode: z.string(),
+  mobile: z.string(),
+  email: z.string(),
+  last_update: z.string(),
+});
+
+const AddressIdCardSchema = z.object({
+  address_type: z.string(),
+  office_name: z.string(),
+  address_no: z.string(),
+  moo: z.string(),
+  village: z.string(),
+  soi: z.string(),
+  road: z.string(),
+  province: z.string(),
+  district: z.string(),
+  subdistrict: z.string(),
+  zipcode: z.string(),
+  mobile: z.string(),
+  email: z.string(),
+  last_update: z.string(),
+});
+
+export const PharmacySchema = z.object({
+  license_id: z.string(),
+  title_th: z.string(),
+  first_name_th: z.string(),
+  last_name_th: z.string(),
+  title_en: z.string(),
+  first_name_en: z.string(),
+  last_name_en: z.string(),
+  id_card: z.string(),
+  dob: z.string(),
+  religion: z.string(),
+  citizenship: z.string(),
+  nationality: z.string(),
+  university: z.string(),
+  license_status: z.string(),
+  mobile: z.string(),
+  email: z.string(),
+  store_permit_no: z.string(),
+  card_issue_date: z.string(),
+  card_expire_date: z.string(),
+  address_contact: AddressContactSchema,
+  address_office: AddressOfficeSchema,
+  address_id_card: AddressIdCardSchema,
+  picture: z.string(),
+  ip_address: z.string(),
+  date_time: z.string(),
+});
+
+export type Pharmacy = z.infer<typeof PharmacySchema>;

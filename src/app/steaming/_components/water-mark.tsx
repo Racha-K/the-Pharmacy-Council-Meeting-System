@@ -1,4 +1,6 @@
-const Watermark = () => {
+import { Pharmacy } from "@/types/pharmacy-type";
+
+const Watermark = ({ pharmacy }: { pharmacy: Pharmacy }) => {
     return (
         <div className="absolute top-0 left-0 w-full h-full grid grid-cols-6 grid-rows-10 sm:grid-cols-5 sm:grid-rows-7 lg:grid-cols-6 lg:grid-rows-6 xl:grid-cols-8  opacity-30 !z-20 pointer-events-none">
             {Array.from({ length: 48 }).map((_, index) => {
@@ -14,7 +16,7 @@ const Watermark = () => {
                             transform: `translate(${randomX}px, ${randomY}px) rotate(${randomRotate}deg)`,
                         }}
                     >
-                        ภก.อภินันท์ วัชราภิชาต
+                        {pharmacy.title_th} {pharmacy.first_name_th} {pharmacy.last_name_th}
                     </div>
                 );
             })}
