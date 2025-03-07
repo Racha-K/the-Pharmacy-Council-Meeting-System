@@ -41,7 +41,8 @@ export default function Home() {
     if (!element) return;
 
     const handleScroll = () => {
-      setIsOk(element.scrollTop === 0);
+      const { scrollTop, scrollHeight, clientHeight } = element;
+      setIsOk(scrollTop + clientHeight >= scrollHeight - 5);
     };
 
     element.addEventListener("scroll", handleScroll);
@@ -54,29 +55,28 @@ export default function Home() {
 
   return (
     <>
-      <Wrapper className='space-y-12 md:space-y-24 lg:space-y-8'>
+      <Wrapper>
         <div className='flex-col !p-4 lg:content-center justify-self-center h-full'>
-          <div className='space-y-3 flex flex-col items-center'>
-            <Image src={icon} alt='icon' className='w-[100px] h-[100px] md:w-[140px] md:h-[140px]' />
-            <div className='text-standard text-center space-y-6 md:!mt-8'>
+          <div className='space-y-4 md:space-y-2 2xl:space-y-4 flex flex-col items-center'>
+            <Image src={icon} alt='icon' className='w-[100px] h-[100px] md:w-[120px] md:h-[120px] 2xl:w-[140px] 2xl:h-[140px]' />
+            <div className='text-standard text-center space-y-6 md:!mt-4 2xl:!mt-8'>
               <div className='font-semibold text-[#23260D]'>
-                <h1 className='text-base md:text-3xl lg:text-[40px]'>ระบบประชุมสภาเภสัชกรรม</h1>
-                <span className='text-base md:text-2xl lg:text-2xl'>the Pharmacy Council of Thailand <br />
+                <h1 className='text-2xl md:text-xl lg:text-3xl 2xl:text-[40px]'>ระบบประชุมสภาเภสัชกรรม</h1>
+                <span className='text-xl md:text-lg lg:text-xl 2xl:text-2xl'>the Pharmacy Council of Thailand <br />
                   Meeting System</span>
               </div>
-              <div className='space-y-8'>
-                <h6 className='text-sm md:text-2xl font-semibold text-[#5D6222]'>ขั้นตอนการเข้าห้องประชุม</h6>
+              <div className='space-y-8 2xl:space-y-10'>
+                <h6 className='text-lg md:text-2xl font-semibold text-[#5D6222]'>ขั้นตอนการเข้าห้องประชุม</h6>
                 <StepLogin />
               </div>
             </div>
           </div>
-          <div className='space-y-6 flex flex-col items-center '>
+          <div className='space-y-6 flex flex-col items-center 2xl:space-y-8'>
             <Dialog>
-              <DialogTrigger className='flex relative w-full justify-center items-center mt-12 '>
-                <button className=' lg:w-[528px] w-full bg-gradient-main text-2xl font-semibold text-white py-4 rounded-2xl'>เข้าสู่ระบบ</button>
-                {/* <Button title='เข้าสู่ระบบ' /> */}
+              <DialogTrigger className='flex relative w-full justify-center items-center mt-12 md:mt-8 2xl:mt-12 lg:w-[528px] bg-gradient-main text-2xl font-semibold text-white py-4 rounded-2xl'>
+                <span>เข้าสู่ระบบ</span>
               </DialogTrigger>
-              <DialogContent className='max-w-[calc(100vw-48px)] lg:space-y-4 p-4 rounded-3xl'>
+              <DialogContent aria-describedby='เงื่อนไขและข้อกำหนด' className='max-w-[calc(100vw-48px)] lg:space-y-4 p-4 rounded-3xl'>
                 <DialogTitle className='text-center flex flex-col gap-1'>
                   <span className='lg:text-[32px]'>ข้อกำหนดและเงื่อนไข</span>
                   <span className='lg:text-[28px]'>Term and Conditions</span>
@@ -108,23 +108,23 @@ export default function Home() {
                   </div>
                 </div>
                 <DialogFooter className='flex gap-4 lg:gap-8 !place-self-center !justify-center w-full font-semibold'>
-                  <DialogClose className='grow lg:grow-0'>
-                    <button
-                      onClick={() => { setIsOk(false) }}
-                      className='border w-full lg:w-[305px] p-4 rounded-2xl lg:text-2xl text-[#23260D]'>
+                  <DialogClose onClick={() => { setIsOk(false) }} className='grow lg:grow-0 border w-full lg:w-[305px] p-4 rounded-2xl lg:text-2xl text-[#23260D]'>
+                    <span>
                       ไม่ยินยอม
-                    </button>
+                    </span>
                   </DialogClose>
                   <button
                     disabled={!isOk}
                     onClick={() => { router.push('/login') }}
                     className={`border grow lg:flex-grow-0 lg:w-[305px] p-4 rounded-2xl lg:text-2xl text-[#ffffff] ${isOk ? 'cursor-pointer bg-gradient-to-r from-[#80862A] to-[#4F5321]' : 'cursor-not-allowed disabled:opacity-50 disabled:bg-[#C1C457]'}`}>
-                    ยินยอม
+                    <span>
+                      ยินยอม
+                    </span>
                   </button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-            <p className='text-[12px] text-[#23260D] text-center'>สำนักงานเลขาธิการสภาเภสัชกรรม อาคารมหิตลาธิเบศร ชั้น 8 กระทรวงสาธารณสุข<br />
+            <p className='text-[10px] md:text-[12px] text-[#23260D] text-center'>สำนักงานเลขาธิการสภาเภสัชกรรม อาคารมหิตลาธิเบศร ชั้น 8 กระทรวงสาธารณสุข<br />
               เลขที่ 88/19 หมู่ 4 ถนนติวานนท์ ตำบลตลาดขวัญ อำเภอเมือง จังหวัดนนทบุรี 11000 <br />
               โทรศัพท์ 0 2591 9992 (คู่สายอัตโนมัติ) โทรสาร 0 2591 9996 <br />
               Email: pharthai@pharmacycouncil.org

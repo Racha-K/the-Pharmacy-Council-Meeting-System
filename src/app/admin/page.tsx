@@ -56,10 +56,10 @@ export default function AdminPage() {
   }
 
   return (
-    <Wrapper className=" space-y-2 md:space-y-4 flex flex-col items-center relative">
+    <Wrapper className=" space-y-2 md:space-y-4 flex flex-col items-center">
       <Link
         href={"https://www.pharmacycouncil.org/#gsc.tab=0"}
-        className="top-12 hidden md:block right-4 absolute px-3 py-2 bg-[#FAFAEB] border border-[#E7E6AF] rounded-full text-[#23260D]"
+        className="top-12 hidden md:block right-12 absolute px-3 py-2 bg-[#FAFAEB] border border-[#E7E6AF] rounded-full text-[#23260D]"
       >
         เว็บไซต์สภาเภสัชกรรม
       </Link>
