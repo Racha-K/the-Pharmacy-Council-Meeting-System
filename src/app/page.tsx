@@ -3,7 +3,7 @@
 import icon from '@/assets/icons/tele.svg'
 import Image from 'next/image';
 import StepLogin from './_components/step-login';
-import Warpper from '@/components/ui/Warpper';
+import Wrapper from '@/components/ui/Wrapper';
 import { Dialog, DialogContent, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { ArrowDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -54,7 +54,7 @@ export default function Home() {
 
   return (
     <>
-      <Warpper className='space-y-12 md:space-y-24 lg:space-y-8'>
+      <Wrapper className='space-y-12 md:space-y-24 lg:space-y-8'>
         <div className='flex-col !p-4 lg:content-center justify-self-center h-full'>
           <div className='space-y-3 flex flex-col items-center'>
             <Image src={icon} alt='icon' className='w-[100px] h-[100px] md:w-[140px] md:h-[140px]' />
@@ -131,7 +131,7 @@ export default function Home() {
             </p>
           </div>
         </div>
-      </Warpper >
+      </Wrapper >
 
     </>
   );

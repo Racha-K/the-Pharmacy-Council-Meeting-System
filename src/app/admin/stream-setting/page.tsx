@@ -1,5 +1,5 @@
 "use client";
-import Warpper from "@/components/ui/Warpper";
+import Wrapper from "@/components/ui/Wrapper";
 import Image from "next/image";
 import Link from "next/link";
 import icon from "@/assets/icons/tele.svg";
@@ -21,14 +21,14 @@ export default function StreamSettingPage() {
 
   if (isPending || !data) {
     return (
-      <Warpper className=" space-y-2 md:space-y-4 flex flex-col items-center relative">
+      <Wrapper className=" space-y-2 md:space-y-4 flex flex-col items-center relative">
         <div>Loading...</div>
-      </Warpper>
+      </Wrapper>
     );
   }
 
   return (
-    <Warpper className=" space-y-2 md:space-y-4 flex flex-col items-center relative">
+    <Wrapper className=" space-y-2 md:space-y-4 flex flex-col items-center relative">
       <Link
         href={"https://www.pharmacycouncil.org/#gsc.tab=0"}
         className="top-12 hidden md:block right-4 absolute px-3 py-2 bg-[#FAFAEB] border border-[#E7E6AF] rounded-full text-[#23260D]"
@@ -50,6 +50,6 @@ export default function StreamSettingPage() {
         </div>
         <StreamSettingClient />
       </div>
-    </Warpper>
+    </Wrapper>
   );
 }

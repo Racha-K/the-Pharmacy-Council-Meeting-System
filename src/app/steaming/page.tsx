@@ -14,7 +14,7 @@ import { useGetStreamingLink } from "@/service";
 import screenfull from "screenfull";
 import { BellIcon, BellOffIcon, Fullscreen } from "lucide-react";
 import dynamic from "next/dynamic";
-import Warpper from "@/components/ui/Warpper";
+import Wrapper from "@/components/ui/Wrapper";
 
 const Watermark = dynamic(() => import("./_components/water-mark"), { ssr: false });
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
@@ -46,7 +46,7 @@ function page() {
 
     if (!link?.link) {
         return (
-            <Warpper className="flex items-center justify-center h-screen">
+            <Wrapper className="flex items-center justify-center h-screen">
                 <Link
                     href={"https://www.pharmacycouncil.org/#gsc.tab=0"}
                     className="top-12 hidden md:block right-4 absolute px-3 py-2 bg-[#FAFAEB] border border-[#E7E6AF] rounded-full text-[#23260D]"
@@ -63,7 +63,7 @@ function page() {
                         <div className="text-2xl font-semibold text-center">{"ขณะนี้ไม่มีการ Live Stream"}</div>
                     </div>
                 </div>
-            </Warpper>
+            </Wrapper>
         );
     }
     return (
