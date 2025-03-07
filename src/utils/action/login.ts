@@ -8,7 +8,7 @@ interface LoginProps {
 }
 
 export async function login({ license, password }: LoginProps) {
-  const apiKey = process.env.API_KEY || "";
+  const apiKey = "f49f0b4de69b269ad8fd029c7e8ae41d45023049361ff973185756990456bda7";
 
   const formData = new FormData();
   formData.append("license", license);
