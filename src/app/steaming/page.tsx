@@ -8,13 +8,13 @@ import usePharmacyStore, { PharmacyStore } from "@/stores/pharmacy-store";
 import { useRouter } from "next/navigation";
 import { getUser } from "@/utils/action/get-user";
 
-import Warpper from "@/components/ui/Warpper";
 import Link from "next/link";
 import icon from "@/assets/icons/tele.svg";
 import { useGetStreamingLink } from "@/service";
 import screenfull from "screenfull";
 import { BellIcon, BellOffIcon, Fullscreen } from "lucide-react";
 import dynamic from "next/dynamic";
+import Warpper from "@/components/ui/Warpper";
 
 const Watermark = dynamic(() => import("./_components/water-mark"), { ssr: false });
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
