@@ -1,4 +1,4 @@
-import Warpper from '@/components/ui/Warpper'
+import Wrapper from '@/components/ui/Wrapper'
 import Image from 'next/image'
 import React from 'react'
 
@@ -8,7 +8,7 @@ import Button from '@/components/ui/Button'
 
 function page() {
     return (
-        <Warpper className='space-y-2 lg:!px-[56px]'>
+        <Wrapper className='space-y-2 lg:!px-[56px]'>
             <div className='flex flex-col h-full'>
                 <div className='flex gap-8 items-center min-h-max' >
                     <Image src={icon} alt='icon' className='m-4 w-16 h-16 md:w-24 md:h-24' />
@@ -42,7 +42,7 @@ function page() {
                     </div>
                 </div>
             </div>
-        </Warpper >
+        </Wrapper >
     )
 }
 

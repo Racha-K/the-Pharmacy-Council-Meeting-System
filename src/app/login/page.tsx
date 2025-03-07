@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client'
-import Warpper from '@/components/ui/Warpper'
+import Wrapper from '@/components/ui/Wrapper'
 import Image from 'next/image'
 import React, { useState } from 'react'
 
@@ -39,7 +39,7 @@ const page = () => {
     }
 
     return (
-        <Warpper className=' space-y-2 md:space-y-4 flex flex-col items-center relative'>
+        <Wrapper className=' space-y-2 md:space-y-4 flex flex-col items-center relative'>
             <Link href={"https://www.pharmacycouncil.org/#gsc.tab=0"} className='top-12 hidden md:block right-4 absolute px-3 py-2 bg-[#FAFAEB] border border-[#E7E6AF] rounded-full text-[#23260D]'>เว็บไซต์สภาเภสัชกรรม</Link>
             <div className='max-w-[578px] min-h-full place-content-center place-self-center space-y-6'>
                 <div className='space-y-3 md:space-y-8 flex flex-col items-center'>
@@ -100,7 +100,7 @@ const page = () => {
                     </div>
                 </form>
             </div>
-        </Warpper>
+        </Wrapper>
     )
 }
 

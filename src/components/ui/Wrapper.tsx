@@ -8,7 +8,7 @@ interface Props {
   className?: string
 }
 
-function Warpper({ children, className }: Props) {
+function Wrapper({ children, className }: Props) {
   return (
     <div
       className={cn(className, "w-full h-svh bg-cover px-4 py-6 bg-white relative overflow-hidden",
@@ -23,4 +23,4 @@ function Warpper({ children, className }: Props) {
   )
 }
 
-export default Warpper
+export default Wrapper
