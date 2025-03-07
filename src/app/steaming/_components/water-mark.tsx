@@ -11,7 +11,7 @@ const Watermark = ({ pharmacy }: { pharmacy: Pharmacy }) => {
                 return (
                     <div
                         key={index}
-                        className="text-white text-[10px] sm:text-base md:text-xl lg:text-xl xl:text-xl text-nowrap font-bold flex items-center justify-center"
+                        className="text-[#979797] text-[10px] sm:text-base md:text-xl lg:text-xl xl:text-xl text-nowrap font-bold flex items-center justify-center"
                         style={{
                             transform: `translate(${randomX}px, ${randomY}px) rotate(${randomRotate}deg)`,
                         }}
