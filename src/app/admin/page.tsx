@@ -79,10 +79,11 @@ export default function AdminPage() {
           />
           <div className="text-standard text-center space-y-6">
             <div className="font-semibold ">
-              <h1 className="text-xl md:text-4xl lg:text-[40px]">ระบบประชุมสภาเภสัชกรรม</h1>
+              <h1 className="text-xl md:text-4xl lg:text-[40px]">
+                ระบบบริหารจัดการระบบห้องประชุมสภาเภสัชกรรม
+              </h1>
               <span className="text-lg md:text-2xl lg:text-[32px]">
-                the Pharmacy Council of Thailand
-                <br /> Meeting System For Admin
+                The Pharmacy Council of Thailand Management System
               </span>
             </div>
           </div>

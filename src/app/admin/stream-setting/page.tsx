@@ -35,7 +35,7 @@ export default function StreamSettingPage() {
       >
         เว็บไซต์สภาเภสัชกรรม
       </Link>
-      <div className="w-[578px] min-h-full place-content-center place-self-center space-y-6">
+      <div className="max-w-[578px] min-h-full place-content-center place-self-center space-y-6">
         <div className="space-y-3 md:space-y-8 flex flex-col items-center">
           <Image
             src={icon}
@@ -48,7 +48,7 @@ export default function StreamSettingPage() {
               : "ขณะนี้ไม่มีการ Live Stream กรุณาใส่ Link เพื่อเริ่มการ Live Stream"}
           </div>
         </div>
-        <StreamSettingClient />
+        <StreamSettingClient link={data.link} />
       </div>
     </Warpper>
   );
