@@ -124,10 +124,12 @@ export default function Home() {
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-            <p className='text-[10px] md:text-[12px] text-[#23260D] text-center'>สำนักงานเลขาธิการสภาเภสัชกรรม อาคารมหิตลาธิเบศร ชั้น 8 กระทรวงสาธารณสุข<br />
-              เลขที่ 88/19 หมู่ 4 ถนนติวานนท์ ตำบลตลาดขวัญ อำเภอเมือง จังหวัดนนทบุรี 11000 <br />
-              โทรศัพท์ 0 2591 9992 (คู่สายอัตโนมัติ) โทรสาร 0 2591 9996 <br />
-              Email: pharthai@pharmacycouncil.org
+            <p className='text-[10px] md:text-[12px] text-[#23260D] text-center'>
+              สำนักงานเลขาธิการสภาเภสัชกรรม
+              <br />
+              เลขที่ 88/19 หมู่ 4 ถนนติวานนท์ ตำบลตลาดขวัญ อำเภอเมือง จังหวัดนนทบุรี 11000
+              <br />
+              โทรศัพท์ 02-591-9992 Email: pharthai@pharmacycouncil.org
             </p>
           </div>
         </div>

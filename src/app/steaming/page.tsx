@@ -12,9 +12,11 @@ import Link from "next/link";
 import icon from "@/assets/icons/tele.svg";
 import { useGetStreamingLink } from "@/service";
 import screenfull from "screenfull";
-import { BellIcon, BellOffIcon, Fullscreen } from "lucide-react";
+import { BellIcon, BellOffIcon, Fullscreen, LogOut } from "lucide-react";
 import dynamic from "next/dynamic";
 import Wrapper from "@/components/ui/Wrapper";
+import LoginOutBtn from "@/components/loginout-btn";
+import TextMarquee from "@/components/ui/text-marquee";
 
 const Watermark = dynamic(() => import("./_components/water-mark"), { ssr: false });
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
@@ -47,6 +49,11 @@ function page() {
     if (!link?.link) {
         return (
             <Wrapper className="flex items-center justify-center h-screen">
+                {
+                    pharmacy &&
+                    <TextMarquee text={`สวัสดี คุณ ${pharmacy?.first_name_th} ${pharmacy?.last_name_th} (${pharmacy?.license_id}) เข้าร่วมประชุมสภาเภสัชกรรม`} />
+                }
+                <LoginOutBtn className="absolute top-28 right-4" />
                 <Link
                     href={"https://www.pharmacycouncil.org/#gsc.tab=0"}
                     className="top-12 hidden md:block right-4 absolute px-3 py-2 bg-[#FAFAEB] border border-[#E7E6AF] rounded-full text-[#23260D]"
@@ -69,6 +76,9 @@ function page() {
     return (
         <>
             <div className="flex flex-col items-center justify-start md:justify-center min-h-screen w-full !z-[100] relative overflow-hidden p-4 space-y-6">
+                <TextMarquee text={`สวัสดี คุณ ${pharmacy?.first_name_th} ${pharmacy?.last_name_th} (${pharmacy?.license_id}) เข้าร่วมประชุมสภาเภสัชกรรม`} />
+                {/* Loginout BTN */}
+                <LoginOutBtn className="top-12 right-4" />
                 <Image src={tele} alt="logo" width={100} height={100} className=" top-12 left-12" />
                 <ReactPlayer
                     className="react-player pointer-events-none w-[1000px] max-w-full aspect-video"

@@ -5,7 +5,7 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 
 import icon from '@/assets/icons/tele.svg'
-import { LockOpen, User } from 'lucide-react'
+import { Eye, EyeOff, LockOpen, User } from 'lucide-react'
 import Link from 'next/link'
 import { Switch } from '@/components/ui/switch'
 import { login } from '@/utils/action/login'
@@ -13,11 +13,13 @@ import { getUser } from '@/utils/action/get-user'
 import usePharmacyStore from '@/stores/pharmacy-store'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
+import { LoginSchema } from '@/types/login-type'
 
 
 const page = () => {
     const [licenseId, setLicenseId] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+    const [showPassword, setShowPassword] = useState<boolean>(false)
     const { setPharmacy } = usePharmacyStore()
     const router = useRouter()
 
@@ -63,20 +65,26 @@ const page = () => {
                                 onChange={(e) => setLicenseId(e.target.value)}
                                 className='w-full h-full bg-transparent outline-none text-lg' />
                             <div className='absolute -top-0.5 left-20 -translate-y-1/2 px-2 bg-[#FAFAEB] border border-[#E7E6AF] rounded-full'>
-                                <span className='text-[12px] font-bold'>Username</span>
+                                <span className='text-[12px] font-bold'>เลขที่ใบอนุญาต</span>
                             </div>
                         </div>
                         <div className='relative w-full h-14  px-6 py-2 bg-[#FAFAEB] flex items-center border border-[#E7E6AF] rounded-2xl'>
                             <LockOpen size={32} />
                             <div className='w-[1px] h-full mx-4 bg-[#5D6222]' />
                             <input
-                                type='password'
+                                type={showPassword ? 'text' : 'password'}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 className='w-full h-full bg-transparent outline-none text-lg' />
                             <div className='absolute -top-0.5 left-20 -translate-y-1/2 px-2 bg-[#FAFAEB] border border-[#E7E6AF] rounded-full'>
                                 <span className='text-[12px] font-bold'>Password</span>
                             </div>
+                            {password.length > 0 && (
+                                showPassword ?
+                                    <Eye size={28} className='absolute right-4 cursor-pointer' onClick={() => setShowPassword(!showPassword)} /> :
+                                    <EyeOff size={28} className='absolute right-4 cursor-pointer' onClick={() => setShowPassword(!showPassword)} />
+                            )}
+
                         </div>
                     </div>
                     <div className='flex justify-between items-center !mt-4 2xl:!mt-8'>
@@ -92,10 +100,11 @@ const page = () => {
                             className='bg-gradient-to-tr from-[#80862A] to-[#5D6222] text-white w-full py-4 rounded-2xl font-semibold text-lg 2xl:text-2xl'>
                             <span>เข้าสู่ระบบ</span>
                         </button>
-                        <p className='text-[10px] 2xl:text-[12px] text-[#23260D] text-center'>สำนักงานเลขาธิการสภาเภสัชกรรม อาคารมหิตลาธิเบศร ชั้น 8 กระทรวงสาธารณสุข<br />
-                            เลขที่ 88/19 หมู่ 4 ถนนติวานนท์ ตำบลตลาดขวัญ อำเภอเมือง จังหวัดนนทบุรี 11000 <br />
-                            โทรศัพท์ 0 2591 9992 (คู่สายอัตโนมัติ) โทรสาร 0 2591 9996 <br />
-                            Email: pharthai@pharmacycouncil.org
+                        <p className='text-[10px] 2xl:text-[12px] text-[#23260D] text-center'>สำนักงานเลขาธิการสภาเภสัชกรรม
+                            <br />
+                            เลขที่ 88/19 หมู่ 4 ถนนติวานนท์ ตำบลตลาดขวัญ อำเภอเมือง จังหวัดนนทบุรี 11000
+                            <br />
+                            โทรศัพท์ 02-591-9992 Email: pharthai@pharmacycouncil.org
                         </p>
                     </div>
                 </form>
