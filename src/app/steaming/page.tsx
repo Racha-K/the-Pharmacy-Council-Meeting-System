@@ -10,7 +10,7 @@ import { getUser } from "@/utils/action/get-user";
 
 import Link from "next/link";
 import icon from "@/assets/icons/tele.svg";
-import { useGetStreamingLink } from "@/service";
+import { useGetStreamingLink, usePostOnline } from "@/service";
 import screenfull from "screenfull";
 import { BellIcon, BellOffIcon, Fullscreen, LogOut } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -76,6 +76,8 @@ function page() {
       window.removeEventListener("contextmenu", handleContextMenu);
     };
   }, []);
+
+  usePostOnline({ userId: pharmacy?.license_id || "" });
 
   console.log(isFullscreen);
 

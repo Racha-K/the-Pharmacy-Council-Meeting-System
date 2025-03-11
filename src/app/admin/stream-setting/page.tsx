@@ -7,7 +7,7 @@ import StreamSettingClient from "./client";
 import { authClient } from "@/lib/auth";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useGetStreamingLink } from "@/service";
+import { useGetOnline, useGetStreamingLink } from "@/service";
 
 export default function StreamSettingPage() {
   const router = useRouter();
@@ -18,6 +18,7 @@ export default function StreamSettingPage() {
     }
   }, [session, router, isPending]);
   const { data } = useGetStreamingLink();
+  const { data: online } = useGetOnline();
 
   if (isPending || !data) {
     return (
@@ -42,6 +43,9 @@ export default function StreamSettingPage() {
             alt="icon"
             className="w-[70px] h-[70px] md:w-[140px] md:max-w-[150px] md:h-[140px] md:max-h-[150px]"
           />
+          <div className="text-2xl font-semibold text-center">
+            Online Users: <span className="text-blue-600">{online?.online}</span>
+          </div>
           <div className="text-2xl font-semibold text-center">
             {data.link
               ? `Current Streaming Link: ${data.link}`
