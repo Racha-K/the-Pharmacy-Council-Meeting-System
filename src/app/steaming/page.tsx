@@ -17,6 +17,7 @@ import dynamic from "next/dynamic";
 import Wrapper from "@/components/ui/Wrapper";
 import LoginOutBtn from "@/components/loginout-btn";
 import TextMarquee from "@/components/ui/text-marquee";
+import { cn } from "@/lib/cn";
 
 const Watermark = dynamic(() => import("./_components/water-mark"), { ssr: false });
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
@@ -24,6 +25,7 @@ const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 function page() {
   const { pharmacy, setPharmacy } = usePharmacyStore() as PharmacyStore;
   const router = useRouter();
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const { data: link } = useGetStreamingLink();
   const [muted, setMuted] = useState(true);
 
@@ -36,6 +38,11 @@ function page() {
     router.push("/");
   };
 
+  const handleFullscreen = () => {
+    console.log("handleFullscreen");
+    setIsFullscreen(!isFullscreen);
+  };
+
   useEffect(() => {
     try {
       if (!pharmacy) {
@@ -45,6 +52,32 @@ function page() {
       console.log(error);
     }
   }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (
+        event.key === "F12" ||
+        (event.ctrlKey && event.shiftKey && event.key === "I") ||
+        (event.ctrlKey && event.shiftKey && event.key === "J") ||
+        (event.ctrlKey && event.shiftKey && event.key === "K") ||
+        (event.ctrlKey && event.shiftKey && event.key === "L") ||
+        (event.ctrlKey && event.shiftKey && event.key === "U")
+      ) {
+        event.preventDefault();
+      }
+    };
+    const handleContextMenu = (event: MouseEvent) => {
+      event.preventDefault();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("contextmenu", handleContextMenu);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
+
+  console.log(isFullscreen);
 
   if (!link?.link) {
     return (
@@ -61,7 +94,7 @@ function page() {
         >
           เว็บไซต์สภาเภสัชกรรม
         </Link>
-        <div className="w-[578px] min-h-full place-content-center place-self-center space-y-6">
+        <div className="w-max min-h-full place-content-center place-self-center space-y-6">
           <div className="space-y-3 md:space-y-8 flex flex-col items-center">
             <Image
               src={icon}
@@ -76,27 +109,43 @@ function page() {
   }
   return (
     <>
-      <div className="flex flex-col items-center justify-start md:justify-center min-h-screen w-full !z-[100] relative overflow-hidden p-4 space-y-6">
-        <TextMarquee
-          text={`สวัสดี คุณ ${pharmacy?.first_name_th} ${pharmacy?.last_name_th} (${pharmacy?.license_id}) เข้าร่วมประชุมสภาเภสัชกรรม`}
-        />
+      <div
+        className={cn(
+          "flex flex-col items-center justify-start md:justify-center min-h-screen w-full !z-[100] relative overflow-hidden",
+          !isFullscreen && "p-4 space-y-6"
+        )}
+      >
+        {!isFullscreen && (
+          <TextMarquee
+            text={`สวัสดี คุณ ${pharmacy?.first_name_th} ${pharmacy?.last_name_th} (${pharmacy?.license_id}) เข้าร่วมประชุมสภาเภสัชกรรม`}
+          />
+        )}
         {/* Loginout BTN */}
         <LoginOutBtn className="top-12 right-4" />
-        <Image src={tele} alt="logo" width={100} height={100} className=" top-12 left-12" />
+        {!isFullscreen && (
+          <Image src={tele} alt="logo" width={100} height={100} className=" top-12 left-12" />
+        )}
         <ReactPlayer
-          className="react-player pointer-events-none w-[1000px] max-w-full aspect-video"
+          className={cn(
+            "react-player pointer-events-none w-[1000px] max-h-screen aspect-video",
+            isFullscreen && "!w-[calc(100%-200px)] h-full"
+          )}
           muted={muted}
-          playing
+          playing={true}
+          controls={false}
           url={link.link}
+          {...(isFullscreen && { width: "100%", height: "100%" })}
         />
         {pharmacy && <Watermark pharmacy={pharmacy} />}
-        <p className="text-center text-[#23260D] text-[14px] md:text-base">
-          สำนักงานเลขาธิการสภาเภสัชกรรม
-          <br />
-          เลขที่ 88/19 หมู่ 4 ถนนติวานนท์ ตำบลตลาดขวัญ อำเภอเมือง จังหวัดนนทบุรี 11000
-          <br />
-          โทรศัพท์ 02-591-9992 Email: pharthai@pharmacycouncil.org
-        </p>
+        {!isFullscreen && (
+          <p className="text-center text-[#23260D] text-[14px] md:text-base">
+            สำนักงานเลขาธิการสภาเภสัชกรรม
+            <br />
+            เลขที่ 88/19 หมู่ 4 ถนนติวานนท์ ตำบลตลาดขวัญ อำเภอเมือง จังหวัดนนทบุรี 11000
+            <br />
+            โทรศัพท์ 02-591-9992 Email: pharthai@pharmacycouncil.org
+          </p>
+        )}
       </div>
       <div className="flex fixed bottom-8 left-1/2 -translate-x-1/2 z-[999] gap-4 justify-center items-center">
         <button
@@ -107,7 +156,8 @@ function page() {
         </button>
         <button
           className="bg-gradient-to-tr from-[#80862A] to-[#5D6222] text-white size-12 flex justify-center items-center rounded-2xl"
-          onClick={() => screenfull.request(document.querySelector(".react-player")!)}
+          // onClick={() => screenfull.request(document.querySelector(".react-player")!)}
+          onClick={() => handleFullscreen()}
         >
           <Fullscreen />
         </button>
