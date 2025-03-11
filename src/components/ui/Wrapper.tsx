@@ -1,12 +1,12 @@
-import React from 'react'
+import React from "react";
 // import bgmain from '@/assets/images/bg-main.png'
 // import bgsub from '@/assets/images/bg-sub.png'
-import { cn } from '../../lib/cn';
-import bg from "@/assets/images/bg.png"
+import { cn } from "../../lib/cn";
+import bg from "@/assets/images/bg.png";
 
 interface Props {
-  children: React.ReactNode
-  className?: string
+  children: React.ReactNode;
+  className?: string;
 }
 
 function Wrapper({ children, className }: Props) {
@@ -20,11 +20,9 @@ function Wrapper({ children, className }: Props) {
           transform: "scale(1)",
         }}
       ></div>
-      <div className="!z-[100] px-4 py-6 rounded-2xl">
-        {children}
-      </div>
+      <div className="!z-[100] px-4 py-6 rounded-2xl">{children}</div>
     </div>
   );
 }
 
-export default Wrapper
+export default Wrapper;
