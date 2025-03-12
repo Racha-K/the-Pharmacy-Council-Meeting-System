@@ -9,7 +9,12 @@ export const authClient = createAuthClient({
   fetchOptions: {
     auth: {
       type: "Bearer",
-      token: () => localStorage.getItem("bearer_token") || "",
+      token: () => {
+        if (typeof window !== "undefined") {
+          return localStorage.getItem("bearer_token") || "";
+        }
+        return "";
+      },
     },
   },
 });

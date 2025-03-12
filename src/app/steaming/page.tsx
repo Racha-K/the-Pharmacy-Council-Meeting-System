@@ -11,7 +11,7 @@ import { getUser } from "@/utils/action/get-user";
 
 import Link from "next/link";
 import icon from "@/assets/icons/tele.svg";
-import { useGetStreamingLink } from "@/service";
+import { useGetStreamingLink, usePostOnline } from "@/service";
 import screenfull from "screenfull";
 import { BellIcon, BellOffIcon, Fullscreen, LogOut } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -89,7 +89,7 @@ function page() {
     };
   }, []);
 
-  console.log(image);
+  usePostOnline({ userId: pharmacy?.license_id || "" });
 
   if (!link?.link) {
     return (
