@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import React, { useEffect, useState } from "react";
@@ -25,9 +26,10 @@ const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 function page() {
   const { pharmacy, setPharmacy } = usePharmacyStore() as PharmacyStore;
   const router = useRouter();
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [image, setImage] = useState<string>('')
   const { data: link } = useGetStreamingLink();
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState<boolean>(true);
 
   const checkUser = async () => {
     const res = await getUser();
@@ -43,15 +45,25 @@ function page() {
     setIsFullscreen(!isFullscreen);
   };
 
+  const getWaterMark = async () => {
+    console.log(pharmacy?.first_name_th, pharmacy?.last_name_th)
+    const response = await fetch(`/api/watermark?name=${pharmacy?.first_name_th} ${pharmacy?.last_name_th}`, { method: "GET" });
+    const data = await response.json();
+    setImage(data.image)
+    return
+  }
+
   useEffect(() => {
     try {
       if (!pharmacy) {
         void checkUser();
+      } else {
+        void getWaterMark()
       }
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [checkUser, getWaterMark, pharmacy]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -77,16 +89,16 @@ function page() {
     };
   }, []);
 
-  console.log(isFullscreen);
+  console.log(image);
 
   if (!link?.link) {
     return (
-      <Wrapper className="flex items-center justify-center h-screen">
-        {pharmacy && (
+      <Wrapper className="flex items-center justify-center h-screen relative">
+        {/* {pharmacy && (
           <TextMarquee
             text={`สวัสดี คุณ ${pharmacy?.first_name_th} ${pharmacy?.last_name_th} (${pharmacy?.license_id}) เข้าร่วมประชุมสภาเภสัชกรรม`}
           />
-        )}
+        )} */}
         <LoginOutBtn className="absolute top-28 right-4" />
         <Link
           href={"https://www.pharmacycouncil.org/#gsc.tab=0"}
@@ -115,11 +127,16 @@ function page() {
           !isFullscreen && "p-4 space-y-6"
         )}
       >
-        {!isFullscreen && (
+        {/* Watermark */}
+        {
+          image &&
+          <Image src={image} alt="watermark" fill objectFit="cover" />
+        }
+        {/* {!isFullscreen && (
           <TextMarquee
             text={`สวัสดี คุณ ${pharmacy?.first_name_th} ${pharmacy?.last_name_th} (${pharmacy?.license_id}) เข้าร่วมประชุมสภาเภสัชกรรม`}
           />
-        )}
+        )} */}
         {/* Loginout BTN */}
         <LoginOutBtn className="top-12 right-4" />
         {!isFullscreen && (
@@ -136,7 +153,7 @@ function page() {
           url={link.link}
           {...(isFullscreen && { width: "100%", height: "100%" })}
         />
-        {pharmacy && <Watermark pharmacy={pharmacy} />}
+        {/* {pharmacy && <Watermark pharmacy={pharmacy} />} */}
         {!isFullscreen && (
           <p className="text-center text-[#23260D] text-[14px] md:text-base">
             สำนักงานเลขาธิการสภาเภสัชกรรม
