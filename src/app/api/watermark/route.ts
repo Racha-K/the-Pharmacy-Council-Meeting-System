@@ -8,6 +8,7 @@ export async function GET(req: Request) {
     return new Response("Missing name Parameter", { status: 400 });
   }
 
+  // กำหนดขนาดของภาพ
   const width = 800;
   const height = 600;
   const textSize = 14;
@@ -15,35 +16,34 @@ export async function GET(req: Request) {
   const textSpacingX = 120;
   const textSpacingY = 50;
 
-  const image = sharp({
+  let svgText = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">`;
+
+  for (let y = 0; y < height; y += textSpacingY) {
+    for (let x = 0; x < width; x += textSpacingX) {
+      svgText += `<text x="${x}" y="${y + textSize}" font-size="${textSize}" fill="${textColor}" font-family="Arial" transform="rotate(-15, ${x}, ${y + textSize})">${name}</text>`;
+    }
+  }
+
+  svgText += `</svg>`;
+
+  // ✅ แปลง SVG เป็น PNG ด้วย sharp ก่อน composite
+  const svgBuffer = await sharp(Buffer.from(svgText)).png().toBuffer();
+
+  // ✅ ใช้ sharp สร้างภาพพื้นหลัง + วางข้อความจาก PNG (ไม่ใช้ SVG ตรงๆ)
+  const image = await sharp({
     create: {
       width,
       height,
       channels: 4,
-      background: { r: 0, g: 0, b: 0, alpha: 0 }, // โปร่งใส
+      background: { r: 0, g: 0, b: 0, alpha: 0 }, // transparent
     },
-  });
+  })
+    .composite([{ input: svgBuffer, top: 0, left: 0 }])
+    .png()
+    .toBuffer();
 
-  const composites = [];
-
-  for (let y = 0; y < height; y += textSpacingY) {
-    for (let x = 0; x < width; x += textSpacingX) {
-      const svgText = `
-        <svg width="${textSpacingX}" height="${textSpacingY}" xmlns="http://www.w3.org/2000/svg">
-          <text x="10" y="20" font-size="${textSize}" fill="${textColor}" font-family="Helvetica, sans-serif"
-            transform="rotate(-15, 10, 20)" text-anchor="start">${name}</text>
-        </svg>
-      `;
-      composites.push({
-        input: Buffer.from(svgText),
-        top: y,
-        left: x,
-      });
-    }
-  }
-
-  const pngImage = await image.composite(composites).png().toBuffer();
-  const base64Image = pngImage.toString("base64");
+  // แปลงเป็น Base64
+  const base64Image = image.toString("base64");
 
   return new Response(
     JSON.stringify({
