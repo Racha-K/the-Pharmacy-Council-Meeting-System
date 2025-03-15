@@ -20,7 +20,6 @@ import LoginOutBtn from "@/components/loginout-btn";
 import TextMarquee from "@/components/ui/text-marquee";
 import { cn } from "@/lib/cn";
 
-const Watermark = dynamic(() => import("./_components/water-mark"), { ssr: false });
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 
 function page() {
@@ -46,7 +45,9 @@ function page() {
   };
 
   const getWaterMark = async () => {
-    console.log(pharmacy?.first_name_th, pharmacy?.last_name_th)
+    if (!pharmacy?.first_name_th || !pharmacy?.last_name_th) {
+      return
+    }
     const response = await fetch(`/api/watermark?name=${pharmacy?.first_name_th} ${pharmacy?.last_name_th}`, { method: "GET" });
     const data = await response.json();
     setImage(data.image)
