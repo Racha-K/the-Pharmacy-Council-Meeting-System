@@ -13,7 +13,7 @@ export async function GET(req: Request) {
   const height = 600;
 
   // กำหนดฟอนต์ให้รองรับ macOS/iOS
-  const fontFamily = "Helvetica, sans-serif";
+  const fontFamily = "Helvetica, Arial, sans-serif"; // รองรับ iOS/macOS แน่นอน
   const textSize = 14;
   const textColor = "rgba(211,211,211,0.5)";
   const textSpacingX = 120;
@@ -23,28 +23,15 @@ export async function GET(req: Request) {
 
   for (let y = 0; y < height; y += textSpacingY) {
     for (let x = 0; x < width; x += textSpacingX) {
-      svgText += `<text x="${x}" y="${y + textSize}" font-size="${textSize}" fill="${textColor}" font-family="${fontFamily}" 
+      svgText += `<text x="${x}" y="${y + textSize}" font-size="${textSize}" fill="${textColor}" font-family="${fontFamily}"
         transform="rotate(-15, ${x}, ${y + textSize})" text-anchor="middle" dominant-baseline="middle">${name}</text>`;
     }
   }
 
   svgText += `</svg>`;
 
-  // แปลง SVG เป็น Buffer
-  const svgBuffer = Buffer.from(svgText);
-
-  // สร้างภาพด้วย sharp
-  const image = await sharp({
-    create: {
-      width,
-      height,
-      channels: 4,
-      background: { r: 0, g: 0, b: 0, alpha: 0 }, // โปร่งใส
-    },
-  })
-    .composite([{ input: svgBuffer, top: 0, left: 0 }])
-    .png()
-    .toBuffer();
+  // ใช้ Sharp อ่าน SVG ตรง ๆ
+  const image = await sharp(Buffer.from(svgText)).png().toBuffer();
 
   // แปลงเป็น Base64
   const base64Image = image.toString("base64");
