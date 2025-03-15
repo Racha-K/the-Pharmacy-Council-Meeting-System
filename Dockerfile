@@ -18,9 +18,12 @@ RUN apk add --no-cache \
 # ติดตั้ง npm dependencies
 RUN npm install
 
+
 # คัดลอกไฟล์ทั้งหมดเข้าไปใน container
 COPY . .
 
+# สร้าง build ของแอป
+RUN npm run build
 # กำหนดพอร์ตที่แอปจะใช้ (สมมติว่าใช้ 3000)
 EXPOSE 3030
 
