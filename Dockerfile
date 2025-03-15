@@ -1,5 +1,5 @@
 # ใช้ Node.js image ที่รองรับ
-FROM node:16-slim
+FROM node:18-slim
 
 # ติดตั้ง dependencies ที่จำเป็น
 RUN apt-get update && apt-get install -y \
