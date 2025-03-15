@@ -4,6 +4,7 @@ FROM node:18-slim
 # ติดตั้ง dependencies ที่จำเป็น
 RUN apt-get update && apt-get install -y \
     build-essential \
+    fonts-dejavu \
     libvips-dev \
     && rm -rf /var/lib/apt/lists/*
 

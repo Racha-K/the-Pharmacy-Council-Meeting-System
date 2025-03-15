@@ -22,7 +22,7 @@ export async function GET(req: Request) {
 
   for (let y = 0; y < height; y += textSpacingY) {
     for (let x = 0; x < width; x += textSpacingX) {
-      svgText += `<text x="${x}" y="${y + textSize}" font-size="${textSize}" fill="${textColor}" font-family="Arial" transform="rotate(-15, ${x}, ${y + textSize})">${name}</text>`;
+      svgText += `<text x="${x}" y="${y + textSize}" font-size="${textSize}" fill="${textColor}" font-family="sans-serif" transform="rotate(-15, ${x}, ${y + textSize})">${name}</text>`;
     }
   }
 
