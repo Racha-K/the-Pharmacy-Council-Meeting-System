@@ -8,17 +8,13 @@ export async function GET(req: Request) {
     return new Response("Missing name Parameter", { status: 400 });
   }
 
-  // กำหนดขนาดของภาพ
   const width = 800;
   const height = 600;
-
-  // กำหนดฟอนต์และสไตล์
   const textSize = 14;
   const textColor = "rgba(211,211,211,0.5)";
   const textSpacingX = 120;
   const textSpacingY = 50;
 
-  // สร้างภาพพื้นฐานด้วย sharp
   const image = sharp({
     create: {
       width,
@@ -28,28 +24,25 @@ export async function GET(req: Request) {
     },
   });
 
-  const composites = []; // เก็บคำสั่ง composite ทั้งหมด
+  const composites = [];
 
-  // เพิ่มข้อความลงในภาพ
   for (let y = 0; y < height; y += textSpacingY) {
     for (let x = 0; x < width; x += textSpacingX) {
+      const svgText = `
+        <svg width="${textSpacingX}" height="${textSpacingY}" xmlns="http://www.w3.org/2000/svg">
+          <text x="10" y="20" font-size="${textSize}" fill="${textColor}" font-family="Helvetica, sans-serif"
+            transform="rotate(-15, 10, 20)" text-anchor="start">${name}</text>
+        </svg>
+      `;
       composites.push({
-        input: Buffer.from(
-          `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
-            <text x="${x}" y="${y + textSize}" font-size="${textSize}" fill="${textColor}" font-family="Helvetica, sans-serif"
-              transform="rotate(-15, ${x}, ${y + textSize})" text-anchor="middle" dominant-baseline="middle">${name}</text>
-          </svg>`
-        ),
-        top: 0,
-        left: 0,
+        input: Buffer.from(svgText),
+        top: y,
+        left: x,
       });
     }
   }
 
-  // ใช้ composite ทั้งหมดที่เก็บไว้
   const pngImage = await image.composite(composites).png().toBuffer();
-
-  // แปลงเป็น Base64
   const base64Image = pngImage.toString("base64");
 
   return new Response(
