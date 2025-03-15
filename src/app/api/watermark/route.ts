@@ -28,38 +28,33 @@ export async function GET(req: Request) {
 
   svgText += `</svg>`;
 
-  try {
-    // แปลง SVG เป็น Buffer
-    const svgBuffer = Buffer.from(svgText);
+  // แปลง SVG เป็น Buffer
+  const svgBuffer = Buffer.from(svgText);
 
-    // สร้างภาพด้วย sharp
-    const image = await sharp({
-      create: {
-        width,
-        height,
-        channels: 4,
-        background: { r: 0, g: 0, b: 0, alpha: 0 }, // transparent
+  // สร้างภาพด้วย sharp
+  const image = await sharp({
+    create: {
+      width,
+      height,
+      channels: 4,
+      background: { r: 0, g: 0, b: 0, alpha: 0 }, // transparent
+    },
+  })
+    .composite([{ input: svgBuffer, top: 0, left: 0 }])
+    .png()
+    .toBuffer();
+
+  // แปลงเป็น Base64
+  const base64Image = image.toString("base64");
+
+  return new Response(
+    JSON.stringify({
+      image: `data:image/png;base64,${base64Image}`,
+    }),
+    {
+      headers: {
+        "Content-Type": "application/json",
       },
-    })
-      .composite([{ input: svgBuffer, top: 0, left: 0 }])
-      .png()
-      .toBuffer();
-
-    // แปลงเป็น Base64
-    const base64Image = image.toString("base64");
-
-    return new Response(
-      JSON.stringify({
-        image: `data:image/png;base64,${base64Image}`,
-      }),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-  } catch (error) {
-    console.error("Error generating image:", error);
-    return new Response("Error generating image", { status: 500 });
-  }
+    }
+  );
 }

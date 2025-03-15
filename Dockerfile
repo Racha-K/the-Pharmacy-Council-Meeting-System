@@ -1,31 +1,28 @@
-# ใช้ Node.js เป็น base image
-FROM node:20-alpine
+# ใช้ Node.js image ที่รองรับ
+FROM node:16-slim
 
-# ตั้งค่า working directory
+# ติดตั้ง dependencies ที่จำเป็น
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libvips-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# สร้างและเซ็ต directory ของแอปพลิเคชัน
 WORKDIR /app
 
-# คัดลอกไฟล์ package.json และ package-lock.json (ถ้ามี)
-COPY package.json package-lock.json ./
+# คัดลอก package.json และ package-lock.json
+COPY package*.json ./
 
-# ติดตั้ง dependencies พื้นฐาน
-RUN apk add --no-cache \
-    build-base \
-    vips-dev \
-    cairo-dev \
-    pango-dev \
-    giflib-dev
-
-# ติดตั้ง npm dependencies
+# ติดตั้ง dependencies ของแอปพลิเคชัน
 RUN npm install
 
-
-# คัดลอกไฟล์ทั้งหมดเข้าไปใน container
+# คัดลอกไฟล์ source code ไปยัง container
 COPY . .
 
-# สร้าง build ของแอป
 RUN npm run build
-# กำหนดพอร์ตที่แอปจะใช้ (สมมติว่าใช้ 3000)
+
+# กำหนดให้ Docker ใช้งาน port 3000
 EXPOSE 3030
 
-# สั่งให้รันแอปเมื่อ container ทำงาน
+# รันแอปพลิเคชัน
 CMD ["npm", "start"]
