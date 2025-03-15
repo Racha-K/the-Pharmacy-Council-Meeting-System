@@ -1,4 +1,4 @@
-import sharp from "sharp";
+import { createCanvas, registerFont } from "canvas";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -8,42 +8,36 @@ export async function GET(req: Request) {
     return new Response("Missing name Parameter", { status: 400 });
   }
 
-  // กำหนดขนาดของภาพ
+  // ขนาดของภาพ
   const width = 800;
   const height = 600;
+  const canvas = createCanvas(width, height);
+  const ctx = canvas.getContext("2d");
+
+  // ตั้งค่าให้พื้นหลังโปร่งใส
+  ctx.clearRect(0, 0, width, height);
+
+  // กำหนดค่าฟอนต์
   const textSize = 14;
-  const textColor = "rgba(211,211,211,0.5)";
+  ctx.font = `${textSize}px Arial`;
+  ctx.fillStyle = "rgba(211,211,211,0.5)";
+  ctx.textAlign = "center";
+
+  // วางข้อความซ้ำๆ บนภาพ
   const textSpacingX = 120;
   const textSpacingY = 50;
-
-  let svgText = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">`;
-
   for (let y = 0; y < height; y += textSpacingY) {
     for (let x = 0; x < width; x += textSpacingX) {
-      svgText += `<text x="${x}" y="${y + textSize}" font-size="${textSize}" fill="${textColor}" font-family="Arial" transform="rotate(-15, ${x}, ${y + textSize})">${name}</text>`;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate((-15 * Math.PI) / 180); // หมุน -15 องศา
+      ctx.fillText(name, 0, 0);
+      ctx.restore();
     }
   }
 
-  svgText += `</svg>`;
-
-  // ✅ แปลง SVG เป็น PNG ด้วย sharp ก่อน composite
-  const svgBuffer = await sharp(Buffer.from(svgText)).png().toBuffer();
-
-  // ✅ ใช้ sharp สร้างภาพพื้นหลัง + วางข้อความจาก PNG (ไม่ใช้ SVG ตรงๆ)
-  const image = await sharp({
-    create: {
-      width,
-      height,
-      channels: 4,
-      background: { r: 0, g: 0, b: 0, alpha: 0 }, // transparent
-    },
-  })
-    .composite([{ input: svgBuffer, top: 0, left: 0 }])
-    .png()
-    .toBuffer();
-
-  // แปลงเป็น Base64
-  const base64Image = image.toString("base64");
+  // แปลงเป็น PNG base64
+  const base64Image = canvas.toBuffer("image/png").toString("base64");
 
   return new Response(
     JSON.stringify({
