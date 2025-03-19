@@ -35,7 +35,7 @@ const Watermark = ({ pharmacy }: { pharmacy: Pharmacy }) => {
         ctx.restore();
       }
     }
-  }, []);
+  }, [pharmacy.first_name_th, pharmacy.last_name_th, window.innerWidth, window.innerHeight]);
 
   return (
     <canvas

@@ -19,6 +19,7 @@ import Wrapper from "@/components/ui/Wrapper";
 import LoginOutBtn from "@/components/loginout-btn";
 import TextMarquee from "@/components/ui/text-marquee";
 import { cn } from "@/lib/cn";
+import Watermark from "./_components/water-mark";
 
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 
@@ -26,7 +27,7 @@ function page() {
   const { pharmacy, setPharmacy } = usePharmacyStore() as PharmacyStore;
   const router = useRouter();
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
-  const [image, setImage] = useState<string>("");
+  // const [image, setImage] = useState<string>("");
   const { data: link } = useGetStreamingLink();
   const [muted, setMuted] = useState<boolean>(true);
 
@@ -44,25 +45,25 @@ function page() {
     setIsFullscreen(!isFullscreen);
   };
 
-  const getWaterMark = async () => {
-    if (!pharmacy?.first_name_th || !pharmacy?.last_name_th) {
-      return;
-    }
-    const response = await fetch(
-      `/api/watermark?name=${pharmacy?.first_name_th} ${pharmacy?.last_name_th}`,
-      { method: "GET" }
-    );
-    const data = await response.json();
-    setImage(data.image);
-    return;
-  };
+  // const getWaterMark = async () => {
+  //   if (!pharmacy?.first_name_th || !pharmacy?.last_name_th) {
+  //     return;
+  //   }
+  //   const response = await fetch(
+  //     `/api/watermark?name=${pharmacy?.first_name_th} ${pharmacy?.last_name_th}`,
+  //     { method: "GET" }
+  //   );
+  //   const data = await response.json();
+  //   setImage(data.image);
+  //   return;
+  // };
 
   useEffect(() => {
     try {
       if (!pharmacy) {
         void checkUser();
       } else {
-        void getWaterMark();
+        // void getWaterMark();
       }
     } catch (error) {
       console.log(error);
@@ -132,7 +133,7 @@ function page() {
         )}
       >
         {/* Watermark */}
-        {image && <Image src={image} alt="watermark" fill objectFit="cover" />}
+        {/* {image && <Image src={image} alt="watermark" fill objectFit="cover" />} */}
         {/* {!isFullscreen && (
           <TextMarquee
             text={`สวัสดี คุณ ${pharmacy?.first_name_th} ${pharmacy?.last_name_th} (${pharmacy?.license_id}) เข้าร่วมประชุมสภาเภสัชกรรม`}
@@ -154,7 +155,7 @@ function page() {
           url={link.link}
           {...(isFullscreen && { width: "100%", height: "100%" })}
         />
-        {/* {pharmacy && <Watermark pharmacy={pharmacy} />} */}
+        {pharmacy && <Watermark pharmacy={pharmacy} />}
         {!isFullscreen && (
           <p className="text-center text-[#23260D] text-[14px] md:text-base">
             สำนักงานเลขาธิการสภาเภสัชกรรม
