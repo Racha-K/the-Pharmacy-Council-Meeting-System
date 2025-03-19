@@ -26,7 +26,7 @@ function page() {
   const { pharmacy, setPharmacy } = usePharmacyStore() as PharmacyStore;
   const router = useRouter();
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
-  const [image, setImage] = useState<string>('')
+  const [image, setImage] = useState<string>("");
   const { data: link } = useGetStreamingLink();
   const [muted, setMuted] = useState<boolean>(true);
 
@@ -46,25 +46,28 @@ function page() {
 
   const getWaterMark = async () => {
     if (!pharmacy?.first_name_th || !pharmacy?.last_name_th) {
-      return
+      return;
     }
-    const response = await fetch(`/api/watermark?name=${pharmacy?.first_name_th} ${pharmacy?.last_name_th}`, { method: "GET" });
+    const response = await fetch(
+      `/api/watermark?name=${pharmacy?.first_name_th} ${pharmacy?.last_name_th}`,
+      { method: "GET" }
+    );
     const data = await response.json();
-    setImage(data.image)
-    return
-  }
+    setImage(data.image);
+    return;
+  };
 
   useEffect(() => {
     try {
       if (!pharmacy) {
         void checkUser();
       } else {
-        void getWaterMark()
+        void getWaterMark();
       }
     } catch (error) {
       console.log(error);
     }
-  }, [checkUser, getWaterMark, pharmacy]);
+  }, [pharmacy]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -129,10 +132,7 @@ function page() {
         )}
       >
         {/* Watermark */}
-        {
-          image &&
-          <Image src={image} alt="watermark" fill objectFit="cover" />
-        }
+        {image && <Image src={image} alt="watermark" fill objectFit="cover" />}
         {/* {!isFullscreen && (
           <TextMarquee
             text={`สวัสดี คุณ ${pharmacy?.first_name_th} ${pharmacy?.last_name_th} (${pharmacy?.license_id}) เข้าร่วมประชุมสภาเภสัชกรรม`}
