@@ -8,7 +8,7 @@ import tele from "@/assets/icons/tele.svg";
 import usePharmacyStore, { PharmacyStore } from "@/stores/pharmacy-store";
 import { useRouter } from "next/navigation";
 import { getUser } from "@/utils/action/get-user";
-
+import Watermark from "@uiw/react-watermark";
 import Link from "next/link";
 import icon from "@/assets/icons/tele.svg";
 import { useGetStreamingLink, usePostOnline } from "@/service";
@@ -19,7 +19,6 @@ import Wrapper from "@/components/ui/Wrapper";
 import LoginOutBtn from "@/components/loginout-btn";
 import TextMarquee from "@/components/ui/text-marquee";
 import { cn } from "@/lib/cn";
-import Watermark from "./_components/water-mark";
 
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 
@@ -144,18 +143,27 @@ function page() {
         {!isFullscreen && (
           <Image src={tele} alt="logo" width={100} height={100} className=" top-12 left-12" />
         )}
-        <ReactPlayer
-          className={cn(
-            "react-player pointer-events-none w-[1000px] max-h-screen aspect-video",
-            isFullscreen && "!w-[calc(100%-200px)] h-full"
-          )}
-          muted={muted}
-          playing={true}
-          controls={false}
-          url={link.link}
-          {...(isFullscreen && { width: "100%", height: "100%" })}
-        />
-        {pharmacy && <Watermark pharmacy={pharmacy} />}
+        <Watermark
+          gapX={5}
+          gapY={80}
+          height={5}
+          fontSize={12}
+          fontColor="rgba(255, 255, 255, 0.3)"
+          content={`${pharmacy?.first_name_th} ${pharmacy?.last_name_th}`}
+        >
+          <ReactPlayer
+            className={cn(
+              "react-player pointer-events-none w-[1000px] max-h-screen aspect-video",
+              isFullscreen && "!w-[calc(100%-200px)] h-full"
+            )}
+            muted={muted}
+            playing={true}
+            controls={false}
+            url={link.link}
+            {...(isFullscreen && { width: "100%", height: "100%" })}
+          />
+        </Watermark>
+        {/* {pharmacy && <Watermark pharmacy={pharmacy} />} */}
         {!isFullscreen && (
           <p className="text-center text-[#23260D] text-[14px] md:text-base">
             สำนักงานเลขาธิการสภาเภสัชกรรม
