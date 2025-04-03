@@ -148,7 +148,7 @@ function page() {
           gapY={80}
           height={5}
           fontSize={12}
-          fontColor="#8c95a3"
+          fontColor="#8c95a3bb"
           content={`${pharmacy?.first_name_th} ${pharmacy?.last_name_th}`}
         >
           <ReactPlayer
