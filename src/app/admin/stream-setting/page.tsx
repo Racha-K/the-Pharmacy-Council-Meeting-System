@@ -1,4 +1,5 @@
 "use client";
+
 import Wrapper from "@/components/ui/Wrapper";
 import Image from "next/image";
 import Link from "next/link";
@@ -53,6 +54,16 @@ export default function StreamSettingPage() {
           </div>
         </div>
         <StreamSettingClient link={data.link} />
+      </div>
+      <div className="absolute top-32 right-4">
+        <div className="font-bold text-lg text-primary">Online User</div>
+        <div className="flex flex-col gap-2 border rounded-lg p-2 overflow-auto h-64 w-48">
+          {online?.list.map((item) => (
+            <div key={item} className="text-sm">
+              {item}
+            </div>
+          ))}
+        </div>
       </div>
     </Wrapper>
   );

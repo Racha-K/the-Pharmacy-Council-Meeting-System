@@ -18,18 +18,19 @@ export const useUpdateStreamingLink = () => {
   });
 };
 
-export const usePostOnline = (body: { userId: string }) => {
+export const usePostOnline = (body: { userId: string }, enabled: boolean) => {
   return useQuery({
     queryKey: ["online"],
     queryFn: () => fetchApi<unknown>("/online", { method: "POST", body }),
-    refetchInterval: 10000,
+    refetchInterval: 30000,
+    enabled,
   });
 };
 
 export const useGetOnline = () => {
   return useQuery({
     queryKey: ["online"],
-    queryFn: () => fetchApi<{ online?: number }>("/online", { method: "GET" }),
-    refetchInterval: 1000,
+    queryFn: () => fetchApi<{ online?: number; list: string[] }>("/online", { method: "GET" }),
+    refetchInterval: 60000,
   });
 };

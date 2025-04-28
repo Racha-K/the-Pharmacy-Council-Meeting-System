@@ -93,7 +93,12 @@ function page() {
     };
   }, []);
 
-  usePostOnline({ userId: pharmacy?.license_id || "" });
+  usePostOnline(
+    {
+      userId: `${pharmacy?.license_id} ${pharmacy?.first_name_th} ${pharmacy?.last_name_th}`,
+    },
+    !!pharmacy?.license_id && !!pharmacy?.first_name_th && !!pharmacy?.last_name_th
+  );
 
   if (!link?.link) {
     return (
